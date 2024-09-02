@@ -38,6 +38,10 @@ class SpaceWidget extends StatelessWidget {
             spaceModel.name ?? '',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
+          Text(
+            spaceModel.homePorts ?? '',
+            style: const TextStyle(fontSize: 18),
+          ),
         ],
       ),
     );
