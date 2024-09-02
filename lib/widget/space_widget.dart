@@ -15,7 +15,7 @@ class SpaceWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Container(
+            child: SizedBox(
               height: 150,
               width: double.infinity,
               child: Image.network(
@@ -25,18 +25,18 @@ class SpaceWidget extends StatelessWidget {
                   return Container(
                     height: 80,
                     color: Colors.grey,
-                    child: Center(child: Text('Image not available')),
+                    child: const Center(child: Text('Image not available')),
                   );
                 },
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Text(
             spaceModel.name ?? '',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
         ],
       ),

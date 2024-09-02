@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         future: spaceFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                   }),
             );
           } else {
-            return Center(
+            return const Center(
               child: Text('No Data Available'),
             );
           }
