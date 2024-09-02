@@ -35,12 +35,16 @@ class _HomePageState extends State<HomePage> {
             return Center(
               child: Text('Error: ${snapshot.error}'),
             );
-          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return SpaceWidget(spaceModel: snapshot.data![index]);
-                });
+          } else if (snapshot.hasData) {
+            return SizedBox(
+              height: 900,
+              width: double.infinity,
+              child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return SpaceWidget(spaceModel: snapshot.data![index]);
+                  }),
+            );
           } else {
             return Center(
               child: Text('No Data Available'),

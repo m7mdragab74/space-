@@ -1,7 +1,7 @@
 class SpaceModel {
-  int id;
-  String name;
-  String image;
+  String? id;
+  String? name;
+  String? image;
 
   SpaceModel({required this.id, required this.name, required this.image});
 

@@ -16,10 +16,10 @@ class SpaceWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(
-              height: 80,
+              height: 150,
               width: double.infinity,
               child: Image.network(
-                spaceModel.image,
+                spaceModel.image ?? '',
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
@@ -35,7 +35,7 @@ class SpaceWidget extends StatelessWidget {
             height: 12,
           ),
           Text(
-            spaceModel.name,
+            spaceModel.name!,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
         ],
