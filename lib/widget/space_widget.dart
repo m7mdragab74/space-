@@ -35,7 +35,7 @@ class SpaceWidget extends StatelessWidget {
             height: 12,
           ),
           Text(
-            spaceModel.name!,
+            spaceModel.name ?? '',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
         ],
