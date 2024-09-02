@@ -13,32 +13,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<SpaceModel>> spaceFuture;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SpaceService spaceService = SpaceService(Dio());
     spaceFuture = spaceService.getSpaceDetail();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<SpaceModel>>(
         future: spaceFuture,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return SpaceWidget(spaceModel: snapshot.data![index]);
                 });
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error:${snapshot.error}'),
-            );
           } else {
             return Center(
-              child: Text('No Data Avilabil'),
+              child: Text('No Data Available'),
             );
           }
         },

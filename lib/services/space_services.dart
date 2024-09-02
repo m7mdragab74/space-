@@ -11,13 +11,13 @@ class SpaceService {
       Response response = await dio.get('https://api.spacexdata.com/v4/ships');
       List<dynamic> space = response.data;
       List<SpaceModel> spaceList = [];
-
       for (var spaces in space) {
         SpaceModel spaceModel = SpaceModel.fromJson(spaces);
         spaceList.add(spaceModel);
       }
       return spaceList;
     } catch (e) {
+      print('Error: $e');
       return [];
     }
   }
