@@ -12,6 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   late Future<List<SpaceModel>> spaceFuture;
 
   @override
@@ -74,6 +81,36 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+
+        bottomNavigationBar: Container( height: 70,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.grey[900],
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, size: 30, color: Colors.white),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search, size: 30, color: Colors.white),
+                label: '', 
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite, size: 30, color: Colors.white),
+                label: '',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            showSelectedLabels: false, 
+            showUnselectedLabels: false, 
+          ),
+        )
+
+
+
     );
   }
 }

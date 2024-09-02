@@ -13,23 +13,35 @@ class SpaceWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: SizedBox(
-              height: 150,
-              width: double.infinity,
-              child: Image.network(
-                spaceModel.image ?? '',
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    height: 80,
-                    color: Colors.grey,
-                    child: const Center(child: Text('Image not available')),
-                  );
-                },
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  height: 150,
+                  width: double.infinity,
+                  child: Image.network(
+                    spaceModel.image ?? '',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 80,
+                        child: const Center(child: Text('Image not available')),
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                right: 8,
+                top: 8,
+                child: Icon(
+                  Icons.favorite_border,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 12,
