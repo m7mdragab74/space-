@@ -1,9 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/database/space_helper.dart';
 import 'package:flutter_application_1/models/space_model.dart';
 
-class SpaceWidget extends StatelessWidget {
+class SpaceWidget extends StatefulWidget {
   const SpaceWidget({super.key, required this.spaceModel});
   final SpaceModel spaceModel;
+
+  @override
+  State<SpaceWidget> createState() => _SpaceWidgetState();
+}
+
+class _SpaceWidgetState extends State<SpaceWidget> {
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite();
+  }
+
+  Future<void> _checkIfFavorite() async {
+    try {
+      final db = DatabaseHelper();
+      final favorites = await db.getFavorites();
+      setState(() {
+        isFavorite =
+            favorites.any((spaces) => spaces.id == widget.spaceModel.id);
+      });
+    } catch (e) {
+      print("Error checking if favorite: $e");
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    try {
+      final db = DatabaseHelper();
+      if (isFavorite) {
+        await db.deleteFavorite(widget.spaceModel.id);
+      } else {
+        await db.insertFavorite(widget.spaceModel);
+      }
+      setState(() {
+        isFavorite = !isFavorite;
+      });
+    } catch (e) {
+      print("Error toggling favorite: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +64,12 @@ class SpaceWidget extends StatelessWidget {
                   height: 150,
                   width: double.infinity,
                   child: Image.network(
-                    spaceModel.image ?? '',
+                    widget.spaceModel.image ?? '',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return Container(
+                      return const SizedBox(
                         height: 80,
-                        child: const Center(child: Text('Image not available')),
+                        child: Center(child: Text('Image not available')),
                       );
                     },
                   ),
@@ -35,10 +78,13 @@ class SpaceWidget extends StatelessWidget {
               Positioned(
                 right: 8,
                 top: 8,
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 24,
+                child: IconButton(
+                  onPressed: _toggleFavorite,
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.red : Colors.white,
+                    size: 24,
+                  ),
                 ),
               ),
             ],
@@ -47,11 +93,11 @@ class SpaceWidget extends StatelessWidget {
             height: 12,
           ),
           Text(
-            spaceModel.name ?? '',
+            widget.spaceModel.name ?? '',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
           Text(
-            spaceModel.homePorts ?? '',
+            widget.spaceModel.homePorts ?? '',
             style: const TextStyle(fontSize: 18),
           ),
         ],

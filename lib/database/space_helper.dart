@@ -1,7 +1,6 @@
 import 'package:flutter_application_1/models/space_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -9,6 +8,7 @@ class DatabaseHelper {
   DatabaseHelper._internal();
 
   static Database? _database;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -20,7 +20,7 @@ class DatabaseHelper {
       join(await getDatabasesPath(), 'spaces.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE favorites(id INTEGER PRIMARY KEY, name TEXT, image TEXT, homePorts TEXT)',
+          'CREATE TABLE favorites(id TEXT PRIMARY KEY, name TEXT, image TEXT, homePorts TEXT)',
         );
       },
       version: 1,
@@ -36,7 +36,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> deleteFavorite(int id) async {
+  Future<void> deleteFavorite(String? id) async {
     final db = await database;
     await db.delete(
       'favorites',

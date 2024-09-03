@@ -31,10 +31,10 @@ class SpaceModel {
 
   factory SpaceModel.fromMap(Map<String, dynamic> map) {
     return SpaceModel(
-      id: map['legacy_id'],
+      id: map['id'],
       name: map['name'],
       image: map['image'],
-      homePorts: map['home_port'],
+      homePorts: map['homePorts'],
     );
   }
 }
