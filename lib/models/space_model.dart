@@ -19,4 +19,22 @@ class SpaceModel {
       homePorts: json['home_port'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+      'homePorts': homePorts,
+    };
+  }
+
+  factory SpaceModel.fromMap(Map<String, dynamic> map) {
+    return SpaceModel(
+      id: map['legacy_id'],
+      name: map['name'],
+      image: map['image'],
+      homePorts: map['home_port'],
+    );
+  }
 }
